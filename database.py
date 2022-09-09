@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 from config import DATABASE_URI
-from sqlalchemy import Table, Column, Integer, String, Float, MetaData
+from sqlalchemy import Table, Column, Integer, String, MetaData
 
 
 engine = create_engine(DATABASE_URI)

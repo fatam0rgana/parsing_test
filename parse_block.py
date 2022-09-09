@@ -53,6 +53,6 @@ def find_description(source):
 
 def find_price(source):
     price = source.find_element(By.CLASS_NAME, value='price').text
-    if isfloat(price.strip()[1:]):
-        return price.strip()[1:].replace('$', '')
+    if '$' in price:
+        return price.replace('$', '')
     return price
