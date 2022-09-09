@@ -2,9 +2,20 @@ from datetime import date, datetime
 from selenium.webdriver.common.by import By
 
 
+def isfloat(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
+
+
 def find_images(source):
-    return source.find_element(By.CLASS_NAME, value='image'). \
-        find_element(By.TAG_NAME, value='img').get_attribute('data-src')
+    try:
+        return source.find_element(By.CLASS_NAME, value='image'). \
+            find_element(By.TAG_NAME, value='img').get_attribute('data-src')
+    except:
+        return 'No images provided'
 
 
 def find_title(source):
@@ -20,16 +31,28 @@ def find_date(source):
 
 
 def find_location(source):
-    return source.find_element(By.CLASS_NAME, value='location').find_element(By.TAG_NAME, value='span').text
+    try:
+        return source.find_element(By.CLASS_NAME, value='location').find_element(By.TAG_NAME, value='span').text
+    except:
+        return 'No information provided'
 
 
 def number_of_beds(source):
-    return source.find_element(By.CLASS_NAME, value='bedrooms').text
+    try:
+        return source.find_element(By.CLASS_NAME, value='bedrooms').text.replace('Beds: ', '')
+    except:
+        return 'No information provided'
 
 
 def find_description(source):
-    return source.find_element(By.CLASS_NAME, value='description').text
+    try:
+        return source.find_element(By.CLASS_NAME, value='description').text
+    except:
+        return 'No information provided'
 
 
 def find_price(source):
-    return source.find_element(By.CLASS_NAME, value='price').text
+    price = source.find_element(By.CLASS_NAME, value='price').text
+    if isfloat(price.strip()[1:]):
+        return price.strip()[1:].replace('$', '')
+    return price
